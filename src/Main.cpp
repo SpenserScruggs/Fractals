@@ -16,18 +16,21 @@ uint32_t scale = 5;
 int strength = 1000;
 int range = 1000;
 
-const uint32_t threads = width / height * 100;
+const uint32_t threads = width / height * 25;
 
 float R_it = 0.0f;
 float Im_it = 0.0f;
 
-std::array<float, 2> func(std::array<float, 2>& a, int depth, float R_it, float Im_it) {    
-    std::array<float, 2> b = a;
-    std::array<float, 2> c = {R_it, Im_it};
+std::array<float, 2> func(std::array<float, 2>& a, int depth, float R_it, float Im_it) {  
+    std::array<float, 2> original;
+    if (depth == iter){
+        original = a;
+    }
+    
     if (depth > 0) {
-        Cmulti(b, c);
-        Cadd(a, b);
-        Csin(a);
+        Cmulti(a, a);
+        Cadd(a, original);
+
         return func(a, depth - 1, R_it, Im_it);
     }
     else {
@@ -70,16 +73,18 @@ std::string formatToThreeDigits(int num) {
 int main() {
     std::string filename = "../Outputs/output.bmp";
     uint8_t* pixelData = new uint8_t[width * height * 3];
+
     // writeBMP(filename, width, height, pixelData);
     // for(int i = 0; i < 1; i++){
     //     generate(pixelData, 0, width*height);
     //     writeBMP(filename, width, height, pixelData);
     // }
-    for(int i = 0; i < 10; i++){
-        std::string filename = "../Outputs/output" + formatToThreeDigits(i) + ".bmp";
+    
+    for(int i = 0; i < 1; i++){
+        std::string filename = "../Outputs/outputTemp" + formatToThreeDigits(i) + ".bmp";
         multi_threading(pixelData);
         writeBMP(filename, width, height, pixelData);
-        Im_it += 0.05f;
+        Im_it += 0.5f;
     }
 
     delete[] pixelData;
