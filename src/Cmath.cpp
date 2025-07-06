@@ -6,7 +6,8 @@
 #include <math.h>
 #include "Cmath.h"
 
-float pi = 3.141592f;
+constexpr float pi = 3.1415927f;
+constexpr float stored_val = 3.0f / (2.0f * pi);
 
 void Cadd(std::array<float, 2>& a, std::array<float, 2> b) {
 	a[0] = a[0] + b[0];
@@ -77,19 +78,19 @@ std::array<unsigned char, 3> Crgb(std::array<float, 2>& a, float strength, float
 
 
 	if (th < -pi / 3) {
-		rgb[0] = (clamp(((-3.0f * th / (2.0f * pi) - 1.5f + 1.0f)* tanh(l* strength) + tanh(l / range)) * 255, 0, 255));
-		rgb[1] = (clamp(((3.0f * th / (2.0f * pi) + 1.5f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
+		rgb[0] = (clamp(((-stored_val * th - 1.5f + 1.0f)* tanh(l* strength) + tanh(l / range)) * 255, 0, 255));
+		rgb[1] = (clamp(((stored_val * th + 1.5f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
 		rgb[2] = (clamp(tanh(l / range) * 255, 0, 255));
 	}
 	else if (th > -pi / 3 && th < pi / 3) {
 		rgb[0] = (clamp(tanh(l / range) * 255, 0, 255));
-		rgb[1] = (clamp(((-3.0f * th / (2.0 * pi) - 0.5f + 1.0f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
-		rgb[2] = (clamp(((3.0f * th / (2.0f * pi) + 0.5f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
+		rgb[1] = (clamp(((-stored_val * th - 0.5f + 1.0f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
+		rgb[2] = (clamp(((stored_val * th + 0.5f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
 	}
 	else {
-		rgb[0] = (clamp(((3.0f * th / (2.0f * pi) - 0.5f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
+		rgb[0] = (clamp(((stored_val * th - 0.5f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
 		rgb[1] = (clamp(tanh(l / range) * 255, 0, 255));
-		rgb[2] = (clamp(((-3.0f * th / (2.0f * pi) + 0.5f + 1.0f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
+		rgb[2] = (clamp(((-stored_val * th + 0.5f + 1.0f) * tanh(l * strength) + tanh(l / range)) * 255, 0, 255));
 	}
 	return rgb;
 }

@@ -19,8 +19,8 @@ struct BMPHeader {
     uint16_t bitsPerPixel = 24; // 24 bits per pixel (RGB)
     uint32_t compression = 0; // no compression
     uint32_t dataSize; // size of the pixel data
-    int32_t horizontalResolution = 2835; // 72 dpi
-    int32_t verticalResolution = 2835; // 72 dpi
+    uint32_t horizontalResolution = 2835; // 72 dpi
+    uint32_t verticalResolution = 2835; // 72 dpi
     uint32_t numColors = 0; // number of colors in the palette (0 means default 2^n)
     uint32_t importantColors = 0; // 0 means all colors are important
 };
@@ -31,6 +31,11 @@ void writeBMP(std::string filename, uint32_t width, uint32_t height, uint8_t* pi
     header.width = width;
     header.height = height;
     header.dataSize = width * height * 3; // 3 bytes per pixel (RGB)
+
+    if (!pixelData) {
+    std::cerr << "Invalid pixel data pointer.\n";
+    return;
+    }
 
     std::ofstream outputFile(filename, std::ios::binary);
 
