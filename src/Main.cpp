@@ -10,9 +10,9 @@
 #include "bmp.h"
 #include "Cmath.h"
 
-uint16_t iter = 50;
-uint32_t width = 900;
-uint32_t height = 900;
+uint16_t iter = 100;
+uint32_t width = 500;
+uint32_t height = 500;
 float scale = 2.0f;
 int strength = 1000;
 int range = 1000;
