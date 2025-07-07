@@ -100,7 +100,7 @@ int main() {
     // }
  
     for(int i = 0; i < 50; i++){
-        std::string filename = "../Outputs/mandelbrot/outputTemp" + formatToThreeDigits(i) + ".bmp";
+        std::string filename = "../Outputs/mandelbrot/output" + formatToThreeDigits(i) + ".bmp";
         multi_threading(pixelData);
         writeBMP(filename, width, height, pixelData);
         
